@@ -244,7 +244,7 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 
 /* 하단 네비 (일정이 먼저) */
 .bottom-nav{position:absolute;bottom:0;left:0;right:0;height:calc(62px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--white);border-top:1.5px solid var(--border);display:flex;z-index:100;}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:transparent;cursor:pointer;color:var(--tx3);font-family:inherit;font-size:11px;font-weight:700;transition:color .15s,transform .08s;}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:transparent;cursor:pointer;color:var(--tx3);font-family:inherit;font-size:10px;font-weight:700;transition:color .15s,transform .08s;}
 .nav-btn:active{transform:scale(.92)}.nav-btn.active{color:var(--blue)}
 .nav-icon{font-size:21px}
 </style>
@@ -389,6 +389,65 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
   <div class="scroll-area"><div id="record-body"></div></div>
 </div>
 
+<div id="screen-info" class="screen">
+  <div class="tab-topbar"><div class="tab-topbar-title">유용한 정보</div></div>
+  <div class="scroll-area" style="padding-bottom:72px">
+    <div style="display:flex;flex-direction:column;gap:12px;padding:14px 16px;">
+
+      <a href="https://www.youtube.com/watch?v=v0IFddKLfZw" target="_blank" style="text-decoration:none">
+        <div style="background:#EEF2FF;border-radius:18px;padding:20px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+          <div style="flex:1">
+            <div style="font-size:18px;font-weight:900;color:#3730A3;line-height:1.5;">전남대병원 입퇴원 🎞️</div>
+            <div style="font-size:13px;font-weight:700;color:#6366F1;margin-top:4px;">유튜브에서 전남대병원에 대해 알아봐요</div>
+          </div>
+          <div style="font-size:44px;flex-shrink:0;">📺</div>
+        </div>
+      </a>
+
+      <a href="https://hannana-c.github.io/runner/" target="_blank" style="text-decoration:none">
+        <div style="background:#FFF0F5;border-radius:18px;padding:20px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+          <div style="flex:1">
+            <div style="font-size:18px;font-weight:900;color:#9D174D;line-height:1.5;">런지 게임 즐기기 🧎🏻‍➡️</div>
+            <div style="font-size:13px;font-weight:700;color:#EC4899;margin-top:4px;">게임으로 재활운동을 즐겨요</div>
+          </div>
+          <div style="font-size:44px;flex-shrink:0;">🕹️</div>
+        </div>
+      </a>
+
+      <a href="https://ye072803-dotcom.github.io/fishing/" target="_blank" style="text-decoration:none">
+        <div style="background:#F0FFF4;border-radius:18px;padding:20px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+          <div style="flex:1">
+            <div style="font-size:18px;font-weight:900;color:#065F46;line-height:1.5;">미니 스쿼트 게임 즐기기 🏋🏻</div>
+            <div style="font-size:13px;font-weight:700;color:#10B981;margin-top:4px;">개임으로 재활운동을 즐겨요</div>
+          </div>
+          <div style="font-size:44px;flex-shrink:0;">🎮</div>
+        </div>
+      </a>
+
+      <a href="https://smallpdf.com/kr/file#s=b5d87d63-23a4-49d4-bc38-1718b807b711&r=read" target="_blank" style="text-decoration:none">
+        <div style="background:#FEFCE8;border-radius:18px;padding:20px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+          <div style="flex:1">
+            <div style="font-size:18px;font-weight:900;color:#92400E;line-height:1.5;">고관절 재활 운동 정보 📋</div>
+            <div style="font-size:13px;font-weight:700;color:#F59E0B;margin-top:4px;">대한재활협회</div>
+          </div>
+          <div style="font-size:44px;flex-shrink:0;">📑</div>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=P0Gl6iQJntQ" target="_blank" style="text-decoration:none">
+        <div style="background:#F0F9FF;border-radius:18px;padding:20px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+          <div style="flex:1">
+            <div style="font-size:18px;font-weight:900;color:#0C4A6E;line-height:1.5;">런지 운동 동영상 📽️</div>
+            <div style="font-size:13px;font-weight:700;color:#0EA5E9;margin-top:4px;">영상 속 운동 방법을 따라해 봐요</div>
+          </div>
+          <div style="font-size:44px;flex-shrink:0;">🎬</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
 <div id="screen-detail" class="screen">
   <div class="detail-topbar">
     <button class="detail-back-btn btn-3d-sm ripple-btn" onclick="playClick();goBack()">←</button>
@@ -428,6 +487,7 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
   <button class="nav-btn active" id="nav-home" onclick="playClick();switchTab('home')"><span class="nav-icon">🏠</span>홈</button>
   <button class="nav-btn" id="nav-ex" onclick="playClick();switchTab('exercises')"><span class="nav-icon">💪</span>운동</button>
   <button class="nav-btn" id="nav-rec" onclick="playClick();switchTab('record')"><span class="nav-icon">📊</span>기록</button>
+  <button class="nav-btn" id="nav-info" onclick="playClick();switchTab('info')"><span class="nav-icon">🔗</span>정보</button>
 </div>
 </div><script>
 /* ════ 사운드 ════ */
@@ -739,8 +799,8 @@ function doLogin(){
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');}
 function switchTab(tab){
   currentTab=tab;
-  ['sch','home','ex','rec'].forEach(v=>{const b=document.getElementById('nav-'+v);if(b)b.classList.remove('active');});
-  const nb=document.getElementById('nav-'+{schedule:'sch',home:'home',exercises:'ex',record:'rec'}[tab]);
+  ['sch','home','ex','rec','info'].forEach(v=>{const b=document.getElementById('nav-'+v);if(b)b.classList.remove('active');});
+  const nb=document.getElementById('nav-'+{schedule:'sch',home:'home',exercises:'ex',record:'rec',info:'info'}[tab]);
   if(nb)nb.classList.add('active');
   if(tab==='home')buildHome();
   else if(tab==='exercises')buildExercisesTab();
@@ -766,9 +826,9 @@ function changeDday(delta){
 /* ════ 홈 ════ */
 function buildHome(){
   const dv=document.getElementById('dday-value'),ds=document.getElementById('dday-sub');
-  if(viewDay===0){dv.textContent='수술 당일';ds.textContent='0일차';}
-  else{dv.textContent='D+'+viewDay;ds.textContent='수술 후 '+viewDay+'일';}
-  dv.style.color=(viewDay===realDay)?'var(--blue)':'var(--orange)';
+  if(viewDay===0){dv.textContent='수술 당일';ds.textContent='';}
+else{dv.textContent='수술 후 '+viewDay+'일차';ds.textContent='';}
+dv.style.color=(viewDay===realDay)?'var(--blue)':'var(--orange)';
   document.getElementById('today-goal-text').textContent=DAY_GOALS[viewDay]||'오늘의 운동을 모두 완료해요';
   updateProgress();buildExCards();
 }
