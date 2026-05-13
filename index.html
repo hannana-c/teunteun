@@ -8,8 +8,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;height:100dvh;overflow:hidden;background:#b0b0b0;font-size:18px}
-body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;align-items:center}
+/* 스크롤 튕김 현상 방지 및 화면 고정 */
+html,body{
+  margin:0;padding:0;width:100%;height:100%;height:100dvh;
+  overflow:hidden;background:#b0b0b0;font-size:18px;overscroll-behavior:none;
+  -webkit-text-size-adjust:100%;
+}
+body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;align-items:center;}
+
 :root{
   --bg:#F7F8FA;--white:#FFFFFF;--dark:#111111;--gray:#F0F2F5;--gray2:#E5E8EE;
   --tx:#111111;--tx2:#555555;--tx3:#999999;--border:#E0E3E9;
@@ -17,18 +23,19 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
   --blue:#0077FF;--purple:#7B2FFF;--pink:#FF2D9B;--teal:#00BFA5;
 }
 
-/* ── 폰 컨테이너 ── */
+/* ── 데스크탑/기본 폰 컨테이너 ── */
 .phone{width:360px;height:720px;background:var(--bg);position:relative;overflow:hidden;border-radius:36px;box-shadow:0 0 0 2px #aaa,0 24px 60px rgba(0,0,0,.28);}
 
-/* 모바일 디바이스 꽉 찬 화면 대응 */
+/* ── 모바일 환경 꽉 찬 화면 대응 (가운데 정렬 해제 및 화면 고정) ── */
 @media (max-width: 500px), (max-height: 750px) {
-  html, body { background: var(--bg); }
-  .phone { width: 100vw; height: 100dvh; border-radius: 0; box-shadow: none; border: none; }
+  body { display:block; position:fixed; top:0; left:0; right:0; bottom:0; height:auto; background:var(--bg); }
+  .phone { position:absolute; top:0; left:0; right:0; bottom:0; width:auto; height:auto; border-radius:0; box-shadow:none; border:none; }
 }
 
-.screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .2s}
+/* ── 공통 레이아웃 ── */
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .2s;overflow:hidden;}
 .screen.active{opacity:1;pointer-events:auto}
-.scroll-area{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:calc(75px + env(safe-area-inset-bottom));}
+.scroll-area{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:calc(90px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;}
 .scroll-area::-webkit-scrollbar{display:none}
 
 /* ── 버튼 효과 ── */
@@ -43,13 +50,14 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 .ripple-btn:active::after{transform:scale(1);opacity:1;}
 
 /* ── 로그인 ── */
-#screen-login{background:linear-gradient(155deg,#0077FF 0%,#7B2FFF 100%);padding:40px 24px 36px;justify-content:space-between;}
-.lg-top{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px}
+#screen-login{background:linear-gradient(155deg,#0077FF 0%,#7B2FFF 100%);padding:max(40px, calc(20px + env(safe-area-inset-top))) 24px max(36px, calc(20px + env(safe-area-inset-bottom)));justify-content:space-between;overflow-y:auto;scrollbar-width:none;}
+#screen-login::-webkit-scrollbar{display:none;}
+.lg-top{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;min-height:200px;flex-shrink:0;}
 .lg-emoji{font-size:60px;animation:bounce 2s infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .lg-title{font-size:32px;font-weight:900;color:#fff;text-align:center;line-height:1.2}
 .lg-sub{font-size:16px;color:rgba(255,255,255,.8);text-align:center;line-height:1.6}
-.lg-card{background:rgba(255,255,255,.15);border-radius:18px;padding:20px;backdrop-filter:blur(10px)}
+.lg-card{background:rgba(255,255,255,.15);border-radius:18px;padding:20px;backdrop-filter:blur(10px);flex-shrink:0;margin-bottom:16px;}
 .lg-field{margin-bottom:14px}
 .lg-label{display:block;font-size:14px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:7px}
 .lg-input{width:100%;padding:12px 14px;border:2px solid rgba(255,255,255,.4);border-radius:10px;background:rgba(255,255,255,.2);color:#fff;font-size:18px;font-family:inherit;font-weight:700;outline:none;}
@@ -67,7 +75,8 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
   color: rgba(255,255,255,0.6);
   text-align: center;
   line-height: 1.6;
-  padding: 12px 4px 0;
+  padding: 0 4px 12px;
+  flex-shrink:0;
 }
 .lg-disclaimer em {
   font-style: italic;
@@ -76,7 +85,7 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 
 /* ── 홈 ── */
 #screen-home{background:var(--bg)}
-.dday-header{padding:38px 18px 0;display:flex;align-items:center;justify-content:center;gap:10px;}
+.dday-header{padding:max(38px, calc(16px + env(safe-area-inset-top))) 18px 0;display:flex;align-items:center;justify-content:center;gap:10px;}
 .dday-nav-btn{width:36px;height:36px;border-radius:9px;background:var(--white);border:1.5px solid var(--border);cursor:pointer;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;color:var(--tx);box-shadow:0 2px 5px rgba(0,0,0,.08);}
 .dday-nav-btn:active{transform:scale(.88)}
 .dday-center{text-align:center;flex:1}
@@ -103,7 +112,7 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 
 /* ── 운동탭 ── */
 #screen-exercises{background:var(--bg)}
-.tab-topbar{padding:38px 18px 10px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.tab-topbar{padding:max(38px, calc(16px + env(safe-area-inset-top))) 18px 10px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .tab-topbar-title{font-size:22px;font-weight:900;color:var(--tx)}
 .body-zone-container{padding:0 14px 14px;display:flex;flex-direction:column;gap:0;}
 .body-svg-wrap{display:flex;justify-content:center;align-items:center;height:280px;flex-shrink:0;}
@@ -175,16 +184,15 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 
 /* ── 운동 상세 ── */
 #screen-detail{background:var(--bg)}
-.detail-topbar{padding:38px 18px 0;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.detail-topbar{padding:max(38px, calc(16px + env(safe-area-inset-top))) 18px 0;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .detail-back-btn{width:35px;height:35px;background:var(--gray);border:none;border-radius:9px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx);}
 .detail-topbar-inner{flex:1}
 .detail-num{font-size:13px;font-weight:700;color:var(--tx3)}
 .detail-name-big{font-size:22px;font-weight:900;color:var(--tx);line-height:1.2}
-.detail-body{flex:1;overflow-y:auto;padding:14px 18px calc(90px + env(safe-area-inset-bottom));scrollbar-width:none}
+.detail-body{flex:1;overflow-y:auto;padding:14px 18px calc(90px + env(safe-area-inset-bottom));scrollbar-width:none;-webkit-overflow-scrolling:touch;}
 .detail-body::-webkit-scrollbar{display:none}
 .posture-card{background:var(--white);border-radius:16px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:12px}
 
-/* 사진 칸 세로 260px 지정 */
 .posture-img-box{height:260px;display:flex;align-items:center;justify-content:center;background:#f5f5f5;padding:8px;}
 .posture-img-box img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
 .posture-no-img{font-size:38px;opacity:.22}
@@ -196,7 +204,6 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 .set-dot.cur-set{background:var(--blue);border-color:var(--blue);color:#fff;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,119,255,.4)}50%{box-shadow:0 0 0 7px rgba(0,119,255,0)}}
 
-/* 타이머 디자인 조절 (숫자 크게) */
 .hold-rest-widget{display:flex;flex-direction:column;align-items:center;gap:9px;}
 .hr-start-btn{width:100%;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:11px;font-size:18px;font-weight:900;font-family:inherit;cursor:pointer;margin-top:8px;}
 .breath-widget{display:flex;flex-direction:column;align-items:center;gap:12px;padding:3px 0}
@@ -204,8 +211,8 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 .breath-circle.inhale{transform:scale(1.26);background:radial-gradient(circle,rgba(0,119,255,.4) 0%,rgba(0,119,255,.15) 100%);border-color:var(--blue);}
 .breath-circle.hold-phase{transform:scale(1.26);background:radial-gradient(circle,rgba(123,47,255,.35) 0%,rgba(123,47,255,.12) 100%);border-color:var(--purple);}
 .breath-circle.exhale{transform:scale(.76);background:radial-gradient(circle,rgba(0,200,83,.3) 0%,rgba(0,200,83,.08) 100%);border-color:var(--green);}
-.bst{font-size:36px;font-weight:900;color:var(--tx)} /* 숫자 더 크게 */
-.bpt{font-size:18px;font-weight:900;color:var(--blue);transition:color .5s} /* 숫자 밑 글씨 크게 */
+.bst{font-size:36px;font-weight:900;color:var(--tx)}
+.bpt{font-size:18px;font-weight:900;color:var(--blue);transition:color .5s}
 .bpt.hc{color:var(--purple)}.bpt.ec{color:var(--green)}
 
 .breath-progress-row{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
@@ -235,14 +242,15 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 .ov-btn-main{width:100%;padding:15px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:18px;font-weight:900;font-family:inherit;cursor:pointer;margin-bottom:9px;}
 .ov-btn-sub{width:100%;padding:11px;background:transparent;color:var(--tx3);border:2px solid var(--border);border-radius:11px;font-size:18px;font-weight:700;font-family:inherit;cursor:pointer;}
 
-/* 축하 */
-#screen-congrats{background:linear-gradient(155deg,var(--green),#0077FF);padding:50px 28px;justify-content:center;align-items:center;gap:18px;text-align:center;}
-.cg-emoji{font-size:68px;animation:bounce 2s infinite}
-.cg-title{font-size:30px;font-weight:900;color:#fff;line-height:1.3}
-.cg-sub{font-size:18px;color:rgba(255,255,255,.85);line-height:1.7;white-space:pre-line}
-.cg-btn{width:100%;padding:18px;background:var(--yellow);color:var(--dark);border:none;border-radius:14px;font-size:18px;font-weight:900;font-family:inherit;cursor:pointer;}
+/* ── 축하 화면 ── */
+#screen-congrats{background:linear-gradient(155deg,var(--green),#0077FF);padding:50px 28px;justify-content:center;align-items:center;gap:18px;text-align:center;overflow-y:auto;scrollbar-width:none;}
+#screen-congrats::-webkit-scrollbar{display:none;}
+.cg-emoji{font-size:68px;animation:bounce 2s infinite;flex-shrink:0;}
+.cg-title{font-size:30px;font-weight:900;color:#fff;line-height:1.3;flex-shrink:0;}
+.cg-sub{font-size:18px;color:rgba(255,255,255,.85);line-height:1.7;white-space:pre-line;flex-shrink:0;}
+.cg-btn{width:100%;padding:18px;background:var(--yellow);color:var(--dark);border:none;border-radius:14px;font-size:18px;font-weight:900;font-family:inherit;cursor:pointer;flex-shrink:0;margin-top:16px;}
 
-/* 하단 네비 (일정이 먼저) */
+/* 하단 네비 */
 .bottom-nav{position:absolute;bottom:0;left:0;right:0;height:calc(62px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--white);border-top:1.5px solid var(--border);display:flex;z-index:100;}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:transparent;cursor:pointer;color:var(--tx3);font-family:inherit;font-size:10px;font-weight:700;transition:color .15s,transform .08s;}
 .nav-btn:active{transform:scale(.92)}.nav-btn.active{color:var(--blue)}
@@ -551,7 +559,7 @@ const EX={
   quad_sets:{id:'quad_sets',icon:'🦵🏻',name:'허벅지 앞쪽 조이기',zone:'thigh',tag:'10회 × 3세트',
     steps:['침대에 눕고 다리를 쭉 펴요','발목을 몸 쪽으로 당겨요','허벅지 앞쪽 근육에 힘을 꽉 줘요 — 무릎뼈가 위로 올라오는 느낌','5초 유지해요','천천히 힘을 빼요'],doType:'holdrest',holdTime:5,restTime:5,sets:3},
   pillow_squeeze:{id:'pillow_squeeze',icon:'🌫️',name:'베개 조이기',zone:'thigh',tag:'10회 × 3세트',
-    steps:['침대에 눕고 양 무릎을 살짝 세워요','무릎 사이에 베개를 끼워요','허벅지 앞쪽을 조이면서 양 무릎으로 베개를 꽉 조여요','10초 유지해요','천천히 힘을 빼요'],doType:'holdrest',holdTime:10,restTime:5,sets:3},
+    steps:['침대에 눕고 양 무릎을 살짝 세워요','무릎 사이에 베개를 끼워요','허벅지 앞쪽 조이면서 양 무릎으로 베개를 꽉 조여요','10초 유지해요','천천히 힘을 빼요'],doType:'holdrest',holdTime:10,restTime:5,sets:3},
   glute_sets:{id:'glute_sets',icon:'🍑',name:'엉덩이 조이기',zone:'hip',tag:'10회 × 3세트',
     steps:['침대에 편하게 누워요','양쪽 엉덩이 근육을 꽉 조여요','5초 유지해요','천천히 힘을 빼요'],doType:'holdrest',holdTime:5,restTime:5,sets:3},
   ham_sets:{id:'ham_sets',icon:'🦵🏻',name:'허벅지 뒤쪽 조이기',zone:'thigh',tag:'10회 × 3세트',
@@ -564,12 +572,10 @@ const EX={
     steps:['수건을 둥글게 말아 무릎 아래에 받쳐요','발목을 몸 쪽으로 당기면서 무릎을 최대한 쭉 펴요','5초 유지해요','천천히 무릎을 내려요'],doType:'holdrest',holdTime:5,restTime:5,sets:3},
   knee_chest:{id:'knee_chest',icon:'🦵🏻',name:'무릎 가슴으로 당기기',zone:'knee',tag:'5~10회 × 2~3세트',
     steps:['침대에 등을 대고 누워요','수술한 쪽 무릎을 천천히 구부려요','양손으로 무릎 아래쪽을 잡고 가슴 쪽으로 천천히 당겨요','당길 수 있는 만큼 당긴 상태에서 잠깐 멈춰요','손을 놓고 다리를 천천히 다시 펴요'],doType:'setcount',sets:3},
-  
   side_abduct:{id:'side_abduct',icon:'🛌',name:'다리 옆으로 밀기',zone:'leg',tag:'5~10회 × 2~3세트',
     steps:['침대에 등을 대고 누워요','수술한 쪽 다리의 무릎을 편 상태를 유지해요','발끝을 천장 방향으로 향하게 해요','다리를 옆으로 천천히 밀어내요','천천히 중앙으로 돌아와요'],doType:'setcount',sets:3},
   side_push:{id:'side_push',icon:'🦵',name:'다리 옆으로 밀기',zone:'leg',tag:'5~10회 × 2~3세트',
     steps:['침대에 등을 대고 누워요','수술한 쪽 다리의 무릎을 편 상태를 유지해요','발끝을 천장 방향으로 향하게 해요','다리를 옆으로 천천히 밀어내요','천천히 중앙으로 돌아와요'],doType:'setcount',sets:3},
-  
   sit_knee_ext:{id:'sit_knee_ext',icon:'🪑',name:'앉아서 무릎 펴기',zone:'knee',tag:'10회 × 3세트',
     steps:['의자에 깊숙이 앉아 허벅지 전체가 의자에 닿게 해요','발목을 몸 쪽으로 당겨요','수술한 쪽 무릎을 최대한 쭉 펴요','5초 유지해요','천천히 무릎을 구부려 발을 바닥에 내려요'],doType:'holdrest',holdTime:5,restTime:5,sets:3},
   sit_cushion:{id:'sit_cushion',icon:'🪑',name:'앉아서 쿠션 조이기',zone:'thigh',tag:'10회 × 3세트',
@@ -630,7 +636,7 @@ const ILLUS={
   side_lie_abduct:{ok:'https://www.image2url.com/r2/default/images/1778566213910-00d50dab-e8da-42cf-8d5d-77cab63b4ed5.png'},
 };
 
-/* ════ 일일 계획 (수술 당일~28일차) ════ */
+/* ════ 일일 계획 ════ */
 const DAY_PLANS=[
   {day:0,  label:'수술 당일',ids:['spirometry']},
   {day:1,  label:'1일차',    ids:['ankle_pumps','glute_sets']},
@@ -791,7 +797,6 @@ function doLogin(){
   viewDay=realDay;exercises=getExsByDay(viewDay);
   document.getElementById('bottom-nav').style.display='flex';
   
-  // 로그인 시 홈 탭 대신 일정 탭으로 이동하도록 변경
   switchTab('schedule');
 }
 
@@ -1205,6 +1210,5 @@ function goCongratsScreen(){
   showScreen('congrats');
 }
 </script>
-</div>
 </body>
 </html>
