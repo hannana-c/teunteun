@@ -50,19 +50,20 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 .ripple-btn:active::after{transform:scale(1);opacity:1;}
 
 /* ── 로그인 ── */
-#screen-login{background:linear-gradient(155deg,#0077FF 0%,#7B2FFF 100%);padding:max(40px, calc(20px + env(safe-area-inset-top))) 24px max(36px, calc(20px + env(safe-area-inset-bottom)));justify-content:space-between;overflow-y:auto;scrollbar-width:none;}
+#screen-login{background:linear-gradient(155deg,#0077FF 0%,#7B2FFF 100%);padding:max(40px, calc(20px + env(safe-area-inset-top))) 24px max(36px, calc(20px + env(safe-area-inset-bottom)));display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:none;}
 #screen-login::-webkit-scrollbar{display:none;}
-.lg-top{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;min-height:200px;flex-shrink:0;}
+.lg-top{flex:0 0 auto;margin:auto 0 24px 0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;}
 .lg-emoji{font-size:60px;animation:bounce 2s infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .lg-title{font-size:32px;font-weight:900;color:#fff;text-align:center;line-height:1.2}
-.lg-sub{font-size:16px;color:rgba(255,255,255,.8);text-align:center;line-height:1.6}
-.lg-card{background:rgba(255,255,255,.15);border-radius:18px;padding:20px;backdrop-filter:blur(10px);flex-shrink:0;margin-bottom:16px;}
-.lg-field{margin-bottom:14px}
+.lg-sub{font-size:16px;color:rgba(255,255,255,.8);text-align:center;line-height:1.6;word-break:keep-all;}
+.lg-card{flex:0 0 auto;width:100%;background:rgba(255,255,255,.15);border-radius:18px;padding:20px;backdrop-filter:blur(10px);margin-bottom:24px;}
+.lg-field{margin-bottom:14px;width:100%;}
 .lg-label{display:block;font-size:14px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:7px}
-.lg-input{display:block;box-sizing:border-box;width:100%;padding:12px 14px;border:2px solid rgba(255,255,255,.4);border-radius:10px;background:rgba(255,255,255,.2);color:#fff;font-size:18px;font-family:inherit;font-weight:700;outline:none;}
+.lg-input{display:block;box-sizing:border-box;width:100%;padding:12px 14px;border:2px solid rgba(255,255,255,.4);border-radius:10px;background:rgba(255,255,255,.2);color:#fff;font-size:18px;font-family:inherit;font-weight:700;outline:none;appearance:none;-webkit-appearance:none;}
 .lg-input::placeholder{color:rgba(255,255,255,.5)}
 .lg-input[type=date]::-webkit-calendar-picker-indicator{filter:invert(1)}
+.lg-input[type=date]{min-height:48px;}
 .lg-saved-info{background:rgba(255,255,255,.2);border-radius:10px;padding:12px 14px;margin-bottom:14px;display:none}
 .lg-saved-label{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:4px}
 .lg-saved-val{font-size:18px;font-weight:900;color:#fff}
@@ -71,17 +72,15 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 .btn-lg-sub{background:rgba(255,255,255,.2);color:#fff;margin-top:8px;}
 .btn-lg:disabled{opacity:.4;cursor:default;box-shadow:none!important;transform:none!important}
 .lg-disclaimer {
+  flex:0 0 auto;
   font-size: 11px;
   color: rgba(255,255,255,0.6);
   text-align: center;
   line-height: 1.6;
   padding: 0 4px 12px;
-  flex-shrink:0;
 }
-.lg-disclaimer em {
-  font-style: italic;
-  color: rgba(255,255,255,0.75);
-}
+.lg-disclaimer:last-child { margin-bottom: auto; }
+.lg-disclaimer em { font-style: italic; color: rgba(255,255,255,0.75); }
 
 /* ── 홈 ── */
 #screen-home{background:var(--bg)}
@@ -264,7 +263,7 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
   <div class="lg-top">
     <div class="lg-emoji">🦴</div>
     <div class="lg-title">튼튼<br>재활 운동</div>
-    <div class="lg-sub">수술 후 재활 운동 단계별 안내<br> </div>
+    <div class="lg-sub">수술 후 재활 운동 단계별 안내</div>
   </div>
   <div class="lg-card">
     <div class="lg-saved-info" id="lg-saved-info">
@@ -577,7 +576,7 @@ const EX={
   side_push:{id:'side_push',icon:'🦵',name:'다리 옆으로 밀기',zone:'leg',tag:'5~10회 × 2~3세트',
     steps:['침대에 등을 대고 누워요','수술한 쪽 다리의 무릎을 편 상태를 유지해요','발끝을 천장 방향으로 향하게 해요','다리를 옆으로 천천히 밀어내요','천천히 중앙으로 돌아와요'],doType:'setcount',sets:3},
   sit_knee_ext:{id:'sit_knee_ext',icon:'🪑',name:'앉아서 무릎 펴기',zone:'knee',tag:'10회 × 3세트',
-    steps:['의자에 깊숙이 앉아 허벅지 전체가 의자에 닿게 해요','발목을 몸 쪽으로 당겨요','수술한 쪽 무릎을 최대한 쭉 펴요','5초 유지해요','천천히 무릎을 구부려 발을 바닥에 내려요'],doType:'holdrest',holdTime:5,restTime:5,sets:3},
+    steps:['의자에 깊숙이 앉아 허벅지 전체가 의자에 닿게 해요','발목을 몸 쪽으로 당겨요','수술한 쪽 무릎을 최대한 쭉 펴요','5초 유지해요','천천히 무릎을 구부려 발 바닥에 내려요'],doType:'holdrest',holdTime:5,restTime:5,sets:3},
   sit_cushion:{id:'sit_cushion',icon:'🪑',name:'앉아서 쿠션 조이기',zone:'thigh',tag:'10회 × 3세트',
     steps:['의자에 바르게 앉아요','양 무릎 사이에 쿠션을 끼워요','양 무릎을 안쪽으로 꽉 조이며 쿠션을 눌러요','5초 유지한 후 천천히 힘을 빼요'],doType:'holdrest',holdTime:5,restTime:5,sets:3},
   sit_knee_lift:{id:'sit_knee_lift',icon:'🪑',name:'앉아서 무릎 들기',zone:'knee',tag:'양쪽 10회',
